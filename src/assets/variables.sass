@@ -1,0 +1,52 @@
+// colors
+$bg-dark: #33362F,
+$bg-light: #E1D4C4
+$bg-brown: #D2B390
+$orange: #D18611
+$red: #902626
+$soft-red: #DF7576
+$green: #65724E
+$greish: #A6B5BF
+$bg-lightpink: #FFF4E8
+$bg-profile-light: #F9F0E5
+
+//font-weights
+$thin: 400
+$normal: 500
+$semibold: 600
+$bold: 700
+
+//font-sizes
+$mini: 14px
+$small: 20px
+$regular: 30px
+$subtitle: 40px
+$title: 60px
+$big: 75px
+$huge: 100px
+
+//screens
+$mobileMax: 812px
+
+$small-phone-width: 345px
+$phone-width: 768px
+$tablet-width: 1200px
+
+@mixin phone
+  @media (max-width: #{$phone-width})
+    @content
+@mixin small-phone
+  @media (max-width: #{$small-phone-width})
+    @content
+@mixin tablet
+  @media (min-width: #{$phone-width}) and (max-width: #{$tablet-width})
+    @content
+@mixin notpc
+  @media (max-width: #{$tablet-width})
+    @content
+@mixin notphone
+  @media (min-width: #{$phone-width})
+    @content
+@mixin pc
+  @media (min-width: #{$tablet-width})
+    @content
