@@ -3,7 +3,7 @@ import { BsSearch } from "react-icons/bs";
 import { Todo } from "../../Interfaces";
 import { Input } from "../Input/Input";
 import useDebounce from "../../hooks/useDebounce";
-
+import "./search.sass";
 const Search: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [query, setQuery] = useState<string>("");

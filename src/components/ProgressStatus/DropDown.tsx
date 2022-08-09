@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DropDownProps } from "../../Interfaces";
+import "./Menu.sass";
 
 const DropDown: React.FC<DropDownProps> = ({
   statuses,

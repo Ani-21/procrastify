@@ -18,6 +18,7 @@ const TodoTask = ({ todo, deleteTask, editTask }: Props) => {
 
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const [select, setSelectStatus] = useState<string>("");
+
   const statuses = () => {
     return ["Pending", "In progress", "Done"];
   };

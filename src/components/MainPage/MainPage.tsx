@@ -4,12 +4,14 @@ import { v4 as uuid } from "uuid";
 import { Todo } from "../../Interfaces";
 import TodoTask from "../TodoTask/TodoTask";
 import Search from "../Search/Search";
+import TabsGroup, { FilterStatus } from "../TabGroup/TabGroup";
 import "./mainPage.sass";
 
 export const MainPage: React.FC = () => {
   const [todo, setTodo] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [todoList, setTodoList] = useState<Todo[]>([]);
+  const [filtered, setFiltered] = useState<FilterStatus>("pending");
 
   const id: string = uuid();
 
@@ -29,12 +31,9 @@ export const MainPage: React.FC = () => {
     console.log(todoList);
   };
 
-  const deleteTask = (taskToDelete: string): void => {
-    setTodoList(
-      todoList.filter((task) => {
-        return task.todoName !== taskToDelete;
-      })
-    );
+  const deleteTask = (id: string): void => {
+    console.log("deleted");
+    setTodoList(todoList.filter((task) => task.id !== id));
   };
 
   const editTask = (id: string, editedTask: string): void => {
@@ -90,6 +89,10 @@ export const MainPage: React.FC = () => {
           <div className="column">
             <div className="container">
               <div className="todo-edit-column">Progress Check</div>
+              <TabsGroup
+                activeFilter={filtered}
+                onFilterChange={(filterStatus) => setFiltered(filterStatus)}
+              />
             </div>
           </div>
         </div>
