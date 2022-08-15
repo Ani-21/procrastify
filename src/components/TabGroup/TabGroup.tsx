@@ -1,4 +1,3 @@
-import React from "react";
 import TabItem, { TabItemProps } from "./TabItem";
 import { MdPendingActions } from "react-icons/md";
 import { GrInProgress } from "react-icons/gr";
@@ -44,18 +43,23 @@ function TabGroup({ activeFilter, onFilterChange }: TabGroupProps) {
   ];
 
   return (
-    <ul className="tab-group">
-      {tabItems.map((tabItem) => (
-        <TabItem
-          key={tabItem.label}
-          leadingIcon={tabItem.leadingIcon}
-          label={tabItem.label}
-          ariaLabel={tabItem.ariaLabel}
-          active={tabItem.active}
-          onClick={() => onFilterChange(tabItem.filterId)}
-        />
-      ))}
-    </ul>
+    <div>
+      <ul className="tab-group">
+        {tabItems.map((tabItem) => (
+          <TabItem
+            key={tabItem.label}
+            leadingIcon={tabItem.leadingIcon}
+            label={tabItem.label}
+            ariaLabel={tabItem.ariaLabel}
+            active={tabItem.active}
+            onClick={() => onFilterChange(tabItem.filterId)}
+          />
+        ))}
+      </ul>
+      <div className="">
+        <p>Your todos</p>
+      </div>
+    </div>
   );
 }
 

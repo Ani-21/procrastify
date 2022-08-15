@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FaPen } from "react-icons/fa";
-import { FiMoreHorizontal } from "react-icons/fi";
 import { CgPlayListCheck } from "react-icons/cg";
 import "./todoTask.sass";
 import { Todo } from "../../Interfaces";
@@ -71,7 +70,6 @@ const TodoTask = ({ todo, deleteTask, editTask }: Props) => {
       <div className="todo">
         <div className="content">
           <span>{todo.todoName} </span>
-          <span> {todo.description} </span>
         </div>
         <div className="buttons-container">
           {/* Remove task */}
@@ -80,12 +78,6 @@ const TodoTask = ({ todo, deleteTask, editTask }: Props) => {
           <button onClick={toggleForm}>
             <i className="fas fa-pen">
               <FaPen />
-            </i>
-          </button>
-          {/* Add description of a task */}
-          <button onClick={toggleForm}>
-            <i className="fi fi-more">
-              <FiMoreHorizontal />
             </i>
           </button>
           {/* Change progress status */}

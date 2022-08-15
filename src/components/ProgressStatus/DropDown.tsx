@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { DropDownProps } from "../../Interfaces";
-import "./Menu.sass";
+import "./dropDown.sass";
 
+// создаем небольшое модальное окно,
+// чтобы была возможность выбора статуса todo
 const DropDown: React.FC<DropDownProps> = ({
   statuses,
   statusSelection,
 }: DropDownProps): JSX.Element => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
+  // обрабатываем нажатие при выборе опции
   const handleStatusClick = (status: string): void => {
     statusSelection(status);
   };
 
+  // прячем и показываем инпут
   useEffect(() => {
     setShowDropDown(showDropDown);
   }, [showDropDown]);

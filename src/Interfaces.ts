@@ -1,7 +1,7 @@
 export interface Todo {
   id: string;
   todoName: string;
-  description: string;
+  status: string;
 }
 
 export interface DropDownProps {

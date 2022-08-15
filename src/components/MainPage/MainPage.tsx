@@ -1,39 +1,47 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
 import { Todo } from "../../Interfaces";
 import TodoTask from "../TodoTask/TodoTask";
 import Search from "../Search/Search";
+import { genericSearch } from "../../utils/genericSearch";
+import { genericFilter } from "../../utils/genericFilter";
 import TabsGroup, { FilterStatus } from "../TabGroup/TabGroup";
 import "./mainPage.sass";
 
 export const MainPage: React.FC = () => {
   const [todo, setTodo] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [todoList, setTodoList] = useState<Todo[]>([]);
+  const [status, setStatus] = useState<string>("");
+  const [todoList, setTodoList] = useState<Todo[]>(
+    JSON.parse(localStorage.getItem("todos")!) || []
+  );
+  const [query, setQuery] = useState<string>("");
   const [filtered, setFiltered] = useState<FilterStatus>("pending");
 
   const id: string = uuid();
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.name === "task") {
-      setTodo(event.target.value);
-    } else {
-      setDescription(event.target.value);
-    }
+  // when reload the data isn't lost
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todoList));
+  }, [todoList]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setTodo(event.target.value);
   };
 
   const addTask = (): void => {
-    const newTask = { id: id, todoName: todo, description: description };
+    const newTask = {
+      id: id,
+      todoName: todo,
+      status: status,
+    };
     setTodoList([...todoList, newTask]);
     setTodo("");
-    setDescription("");
     console.log(todoList);
   };
 
   const deleteTask = (id: string): void => {
-    console.log("deleted");
-    setTodoList(todoList.filter((task) => task.id !== id));
+    setTodoList((oldTodoList) => oldTodoList.filter((todo) => todo.id !== id));
   };
 
   const editTask = (id: string, editedTask: string): void => {
@@ -46,6 +54,11 @@ export const MainPage: React.FC = () => {
     setTodoList(updatedTodos);
   };
 
+  const resultsTodo = todoList.filter((todo) =>
+    genericSearch<Todo>(todo, ["todoName"], query)
+  );
+  // .filter((todo) => genericFilter<Todo>(todo, filtered));
+
   return (
     <>
       <div className="header">
@@ -57,13 +70,6 @@ export const MainPage: React.FC = () => {
             value={todo}
             onChange={handleChange}
           />
-          {/* <input
-            type="text"
-            placeholder="Desctription"
-            name="description"
-            value={description}
-            onChange={handleChange}
-          /> */}
           <button onClick={addTask}>Add Task</button>
         </div>
       </div>
@@ -72,16 +78,17 @@ export const MainPage: React.FC = () => {
           <div className="column">
             <div className="container">
               <div className="todo-list-column">Your list of great plans</div>
-              <Search />
+              <Search onChangeSearchQuery={(query) => setQuery(query)} />
               <div className="todoList">
-                {todoList.map((todo: Todo) => (
+                {resultsTodo.map((todo: Todo) => (
                   <TodoTask
                     key={todo.id}
-                    deleteTask={deleteTask}
+                    deleteTask={() => deleteTask(todo.id)}
                     todo={todo}
                     editTask={editTask}
                   />
                 ))}
+                {resultsTodo.length === 0 && <p>No todos found 😣</p>}
               </div>
             </div>
           </div>

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { clearInterval } from "timers";
+import { useState, useEffect } from "react";
 
 function useDebounce<T>(input: string, delay?: number): string {
   const [debounce, setDebounce] = useState<string>(input);
