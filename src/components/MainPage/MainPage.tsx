@@ -10,17 +10,23 @@ import TabsGroup, { FilterStatus } from "../TabGroup/TabGroup";
 import "./mainPage.sass";
 
 export const MainPage: React.FC = () => {
+  // состояние для каждой отдельной todo
   const [todo, setTodo] = useState<string>("");
+  // состояние для отслеживание статуса(прогресса выполнения)
   const [status, setStatus] = useState<string>("");
+  // список todos будет сохраняться в localStorage
   const [todoList, setTodoList] = useState<Todo[]>(
     JSON.parse(localStorage.getItem("todos")!) || []
   );
+  // состояния для поиска todo в списке
   const [query, setQuery] = useState<string>("");
   const [filtered, setFiltered] = useState<FilterStatus>("pending");
 
+  // генерируем уникальный id
   const id: string = uuid();
 
-  // when reload the data isn't lost
+  // когда страница перезагружается,
+  // данные в localStorage сохраняются
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todoList));
   }, [todoList]);
@@ -29,6 +35,7 @@ export const MainPage: React.FC = () => {
     setTodo(event.target.value);
   };
 
+  // добавление todo
   const addTask = (): void => {
     const newTask = {
       id: id,
@@ -40,10 +47,12 @@ export const MainPage: React.FC = () => {
     console.log(todoList);
   };
 
+  // удаление todo
   const deleteTask = (id: string): void => {
     setTodoList((oldTodoList) => oldTodoList.filter((todo) => todo.id !== id));
   };
 
+  // редактирование todo
   const editTask = (id: string, editedTask: string): void => {
     const updatedTodos = todoList.map((todo) => {
       if (todo.id === id) {
@@ -54,6 +63,7 @@ export const MainPage: React.FC = () => {
     setTodoList(updatedTodos);
   };
 
+  // сохраняем отфильтрованные (найденные по запросу в поиске) todo
   const resultsTodo = todoList.filter((todo) =>
     genericSearch<Todo>(todo, ["todoName"], query)
   );
@@ -62,7 +72,11 @@ export const MainPage: React.FC = () => {
   return (
     <>
       <div className="header">
-        <div className="inputContainer">
+        <h1>PROCRASTIFY</h1>
+      </div>
+      {/*  Область списка дел (также есть возможность редактирования)*/}
+      <div className="input-add-сontainer">
+        <div className="input-сontainer">
           <input
             type="text"
             placeholder="Walk with a dog..."
@@ -93,6 +107,7 @@ export const MainPage: React.FC = () => {
             </div>
           </div>
 
+          {/*  Область редактирования и статуса дел */}
           <div className="column">
             <div className="container">
               <div className="todo-edit-column">Progress Check</div>

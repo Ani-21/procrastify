@@ -3,6 +3,7 @@ import { MdPendingActions } from "react-icons/md";
 import { GrInProgress } from "react-icons/gr";
 import { AiOutlineFileDone } from "react-icons/ai";
 import "./Tab.sass";
+
 export type FilterStatus = "pending" | "in progress" | "done";
 
 interface TabGroupProps {
